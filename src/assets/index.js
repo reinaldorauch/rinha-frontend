@@ -135,6 +135,11 @@ const $ = (s, c = document) => c.querySelector(s);
     function buildDomTree(member, obj) {
         const root = document.createElement('pre');
 
+        if (!obj) {
+            root.textContent = 'null';
+            return root;
+        }
+
         root.textContent = member ? member + ': {' : '{';
 
         for (const [member, val] of Object.entries(obj)) {
