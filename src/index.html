@@ -47,7 +47,7 @@
             color: #BF0E0E;
         }
 
-        #loading {
+        .loading {
             position: absolute;
             top: 0;
             left: 0;
@@ -58,6 +58,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+        .loading.hidden {
+            display: none;
         }
 
 
@@ -98,7 +101,7 @@
 
     </section>
 
-    <div id="loading" class="hidden">
+    <div id="loading" class="loading hidden">
         <span class="loader" id="loading-spinner"></span>
         <p>Loading...</p>
     </div>
