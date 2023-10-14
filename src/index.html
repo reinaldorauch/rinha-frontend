@@ -26,6 +26,10 @@
             font-size: 24px;
         }
 
+        small {
+            font-size: 16px;
+        }
+
         .page {
             flex: 1 0;
             height: 100vh;
@@ -35,8 +39,12 @@
             justify-content: center;
         }
 
-        .page.hidden {
+        .hidden {
             display: none;
+        }
+
+        .error {
+            color: #BF0E0E;
         }
 
         #loading {
@@ -51,6 +59,7 @@
             justify-content: center;
             align-items: center;
         }
+
 
         /* Section: spinner credits from https://cssloaders.github.io */
         .loader {
@@ -82,14 +91,14 @@
         <p>
             <input type="file" id="loader" style="display: none;">
             <button id="load-json">Load JSON</button>
-            <p id="error"></p>
+            <small id="error" class="error hidden"></small>
         </p>
     </section>
     <section id="viewer" class="page hidden">
 
     </section>
 
-    <div id="loading" visibility="none">
+    <div id="loading" class="hidden">
         <span class="loader" id="loading-spinner"></span>
         <p>Loading...</p>
     </div>

@@ -12,6 +12,7 @@ const $ = (s, c = document) => c.querySelector(s);
     const loadingPanel = $('#loading');
     const loader = $('#loader');
     const loadJson = $('#load-json');
+    const errorContainer = $('#error');
 
     init();
 
@@ -40,13 +41,23 @@ const $ = (s, c = document) => c.querySelector(s);
      * @param {boolean} v
      */
     function setLoading(v) {
-        loadingPanel.style.visibility = v ? 'visible' : 'none';
+        loadingPanel.classList[(v ? 'add' : 'remove')]('hidden');
+    }
+
+    function showError(error) {
+        errorContainer.textContent = error;
+        errorContainer.classList.remove('hidden');
+    }
+
+    function resetError() {
+        errorContainer.textContent = '';
+        errorContainer.classList.add('hidden');
     }
 
     async function runParserWorker(file) {
         const worker = new Worker('/assets/parser-worker.js');
         const fileReader = new FileReader();
-        
+
         return new Promise((res, rej) => {
             fileReader.addEventListener("load", ev => {
                 worker.postMessage(ev.target.result);
