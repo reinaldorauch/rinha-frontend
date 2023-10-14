@@ -115,8 +115,12 @@ const $ = (s, c = document) => c.querySelector(s);
 
             const onmesssage = (ev) => {
                 clean();
-                const domTree = buildDomTree(ev.data);
-                res(domTree);
+                try {
+                    const domTree = buildDomTree(ev.data);
+                    res(domTree);
+                } catch (err) {
+                    rej(err.message);
+                }
             };
     
             worker.addEventListener("message", onmesssage);
