@@ -34,11 +34,11 @@ const $ = (s, c = document) => c.querySelector(s);
 
             setFilename(file.name);
 
-            const [message, data] = await runParserWorker(file);
+            const [err, data] = await runParserWorker(file);
 
-            if ('error' === message) {
-                showError(data);
-            } else if ('success' === message) {
+            if (err) {
+                showError(err);
+            } else {
                 showSuccess(data);
             }
 
@@ -107,7 +107,7 @@ const $ = (s, c = document) => c.querySelector(s);
 
             const onerror = err => {
                 clean();
-                rej(['error', err.message]);
+                rej([err.message]);
             };
 
             fileReader.addEventListener("load", onload);
@@ -116,10 +116,16 @@ const $ = (s, c = document) => c.querySelector(s);
             const onmesssage = (ev) => {
                 clean();
                 try {
-                    const domTree = buildDomTree(ev.data);
-                    res(['success', domTree]);
+                    const [err, data] = ev.data;
+
+                    if (err) {
+                        return rej(err);
+                    }
+
+                    const domTree = buildDomTree(data);
+                    res([null, domTree]);
                 } catch (err) {
-                    rej(['error', err.message]);
+                    rej([err.message]);
                 }
             };
     
