@@ -33,7 +33,7 @@ const $ = (s, c = document) => c.querySelector(s);
             setLoading(true);
 
             setFilename(file.name);
-            
+
             const [message, data] = await runParserWorker(file);
 
             if ('error' === message) {
@@ -55,6 +55,7 @@ const $ = (s, c = document) => c.querySelector(s);
      * @param {boolean} v
      */
     function setLoading(v) {
+        loadJson.disabled = v;
         loadingPanel.classList[(v ? 'add' : 'remove')]('hidden');
     }
 
