@@ -86,6 +86,16 @@
             }
         } 
         /* end section */
+
+        /* Section: hidden input from https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications#using_a_label_element_to_trigger_a_hidden_file_input_element */
+        .visually-hidden {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip-path: rect(1px, 1px, 1px, 1px);
+        }
+        /* end section */
     </style>
 </head>
 <body>
@@ -93,7 +103,7 @@
         <h1>JSON Tree Viewer</h1>
         <p>Simple JSON Viewer that runs completly on-client. No data exchange.</p>
         <div>
-            <input type="file" id="loader" style="display: none;">
+            <input type="file" id="loader" class="visually-hidden" accept="application/json">
             <button id="load-json">Load JSON</button>
             <small id="error" class="error hidden"></small>
         </div>
