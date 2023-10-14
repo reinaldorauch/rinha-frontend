@@ -56,7 +56,7 @@ const $ = (s, c = document) => c.querySelector(s);
      */
     function setLoading(v) {
         loadJson.disabled = v;
-        loadingPanel.classList[(v ? 'add' : 'remove')]('hidden');
+        v ? show(loadingPanel) : hide(loadingPanel);
     }
 
     /**
@@ -101,26 +101,31 @@ const $ = (s, c = document) => c.querySelector(s);
         const fileReader = new FileReader();
 
         return new Promise((res, rej) => {
-            fileReader.addEventListener("load", ev => {
+            const onload = ev => {
                 worker.postMessage(ev.target.result);
-            });
+            };
 
-            fileReader.addEventListener('error', err => {
+            const onerror = err => {
                 clean();
                 rej();
-            });
-    
-            worker.addEventListener("message", (ev) => {
+            };
+
+            fileReader.addEventListener("load", onload);
+            fileReader.addEventListener('error', onerror);
+
+            const onmesssage = (ev) => {
                 clean();
                 res(ev.data);
-            });
+            };
+    
+            worker.addEventListener("message", onmesssage);
     
             fileReader.readAsText(file);
 
             function clean() {
-                fileReader.removeEventListener('load');
-                fileReader.removeEventListener('error');
-                worker.removeEventListener('message');
+                fileReader.removeEventListener('load', onload);
+                fileReader.removeEventListener('error', onerror);
+                worker.removeEventListener('message', onmesssage);
                 worker.terminate();
             }
         });
