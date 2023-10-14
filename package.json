@@ -4,6 +4,6 @@
         "name": "Reinaldo A. C. Rauch",
         "email": "reinaldorauch@gmail.com"
     },
-    "main": "index.html",
+    "main": "src/index.html",
     "dependencies": {}
 }
