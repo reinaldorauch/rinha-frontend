@@ -90,10 +90,10 @@ const $ = (s, c = document) => c.querySelector(s);
     }
 
     function showSuccess(domTree) {
-        $('#viewer', mainContainer).appendChild(domTree);
+        viewerContainer.appendChild(domTree);
 
-        hide(mainContainer);
-        show(viewerContainer);
+        hide(mainPage);
+        show(viewerPage);
     }
 
     function runParserWorker(file) {
