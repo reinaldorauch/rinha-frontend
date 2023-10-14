@@ -97,7 +97,7 @@ const $ = (s, c = document) => c.querySelector(s);
     }
 
     function runParserWorker(file) {
-        const worker = new Worker('/assets/parser-worker.js');
+        const worker = new Worker('./assets/parser-worker.js');
         const fileReader = new FileReader();
 
         return new Promise((res, rej) => {
