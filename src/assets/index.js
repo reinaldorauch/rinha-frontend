@@ -102,7 +102,7 @@ const $ = (s, c = document) => c.querySelector(s);
 
         return new Promise((res, rej) => {
             const onload = ev => {
-                worker.postMessage(ev.target.result);
+                worker.postMessage(ev.target.result, undefined, [ev.target.result]);
             };
 
             const onerror = err => {
@@ -115,7 +115,8 @@ const $ = (s, c = document) => c.querySelector(s);
 
             const onmesssage = (ev) => {
                 clean();
-                res(ev.data);
+                const domTree = buildDomTree(ev.data);
+                res(domTree);
             };
     
             worker.addEventListener("message", onmesssage);
@@ -129,5 +130,43 @@ const $ = (s, c = document) => c.querySelector(s);
                 worker.terminate();
             }
         });
+    }
+
+    function buildDomTree(member, obj) {
+        const root = document.createElement('pre');
+
+        root.textContent = member ? member + ': {' : '{';
+
+        for (const [member, val] of Object.entries(obj)) {
+            if (Array.isArray(val)) root.appendChild(makeArray(member, val.map(buildDomTree)));
+            if (typeof val === 'number') root.appendChild(makeNumber(member, val));
+            if (typeof val === 'string') root.appendChild(makeString(member, val));
+            root.appendChild(buildDomTree(member, val));
+        }
+
+        root.textContent += '}';
+
+        return root;
+    }
+
+    function makeArray(member, array) {
+        const el = document.createElement('div');
+        el.classList.add('array-entry');
+        el.textContent = '[\n' + member + '\n]';
+        return el;
+    }
+
+    function makeString(member, string) {
+        const el = document.createElement('div');
+        el.classList.add('string-entry');
+        el.textContent = member + ': ' + string;
+        return el;
+    }
+
+    function makeNumber(member, number) {
+        const el = document.createElement('div');
+        el.classList.add('number-entry');
+        el.textContent = member + ': ' + number;
+        return el;
     }
 })();
