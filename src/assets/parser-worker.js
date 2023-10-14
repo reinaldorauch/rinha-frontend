@@ -15,7 +15,7 @@ onmessage = (ev) => {
 function buildDomTree(member, obj) {
     const root = document.createElement('pre');
 
-    root.textContent = member ? member + ': ' : '';
+    root.textContent = member ? member + ': {' : '{';
 
     for (const [member, val] of Object.entries(obj)) {
         if (Array.isArray(val)) root.appendChild(makeArray(member, val.map(buildDomTree)));
@@ -23,6 +23,8 @@ function buildDomTree(member, obj) {
         if (typeof val === 'string') root.appendChild(makeString(member, val));
         root.appendChild(buildDomTree(member, val));
     }
+
+    root.textContent += '}';
 
     return root;
 }
