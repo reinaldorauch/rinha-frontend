@@ -39,12 +39,16 @@
         }
 
         #loading {
-            display: absolute;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Section: spinner credits from https://cssloaders.github.io */
@@ -84,7 +88,7 @@
 
     </section>
 
-    <div id="loading">
+    <div id="loading" visibility="none">
         <span class="loader" id="loading-spinner"></span>
         <p>Loading...</p>
     </div>
