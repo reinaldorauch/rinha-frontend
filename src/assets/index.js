@@ -13,8 +13,10 @@ const $ = (s, c = document) => c.querySelector(s);
     const loader = $('#loader');
     const loadJson = $('#load-json');
     const errorContainer = $('#error');
-    const viewerContainer = $('#viewer-page');
-    const mainContainer = $('#main-page');
+    const viewerPage = $('#viewer-page');
+    const mainPage = $('#main-page');
+    const viewerContainer = $('#viewer');
+    const filename = $('#filename');
 
     init();
 
@@ -29,6 +31,9 @@ const $ = (s, c = document) => c.querySelector(s);
             const file = ev.target.files[0];
 
             setLoading(true);
+
+            setFilename(file.name);
+            
             const [message, data] = await runParserWorker(file);
 
             if ('error' === message) {
@@ -79,8 +84,13 @@ const $ = (s, c = document) => c.querySelector(s);
         hide(errorContainer);
     }
 
+    function setFilename(name) {
+        filename.textContent = name;
+    }
+
     function showSuccess(domTree) {
         $('#viewer', mainContainer).appendChild(domTree);
+
         hide(mainContainer);
         show(viewerContainer);
     }
