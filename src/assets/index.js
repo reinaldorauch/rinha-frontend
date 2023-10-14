@@ -15,6 +15,9 @@ const $ = (s, c = document) => c.querySelector(s);
 
     init();
 
+    /**
+     * Initalizes the app
+     */
     function init() {
         loader.addEventListener('change', async ev => {
             /**
@@ -32,6 +35,10 @@ const $ = (s, c = document) => c.querySelector(s);
         });
     }
 
+    /**
+     * Set loading state of the app
+     * @param {boolean} v
+     */
     function setLoading(v) {
         loadingPanel.style.visibility = v ? 'visible' : 'none';
     }
@@ -39,6 +46,7 @@ const $ = (s, c = document) => c.querySelector(s);
     async function runParserWorker(file) {
         const worker = new Worker('/assets/parser-worker.js');
         const fileReader = new FileReader();
+        
         return new Promise((res, rej) => {
             fileReader.addEventListener("load", ev => {
                 worker.postMessage(ev.target.result);
