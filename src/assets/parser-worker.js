@@ -32,7 +32,7 @@ function buildDomTree(member, obj) {
 function makeArray(member, array) {
     const el = document.createElement('div');
     el.classList.add('array-entry');
-    el.textContent = member;
+    el.textContent = '[\n' + member + '\n]';
     return el;
 }
 
