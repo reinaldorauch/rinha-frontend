@@ -107,7 +107,7 @@ const $ = (s, c = document) => c.querySelector(s);
 
             const onerror = err => {
                 clean();
-                rej();
+                rej(['error', err.message]);
             };
 
             fileReader.addEventListener("load", onload);
@@ -117,9 +117,9 @@ const $ = (s, c = document) => c.querySelector(s);
                 clean();
                 try {
                     const domTree = buildDomTree(ev.data);
-                    res(domTree);
+                    res(['success', domTree]);
                 } catch (err) {
-                    rej(err.message);
+                    rej(['error', err.message]);
                 }
             };
     
