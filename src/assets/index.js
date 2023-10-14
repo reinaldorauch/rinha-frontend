@@ -13,6 +13,8 @@ const $ = (s, c = document) => c.querySelector(s);
     const loader = $('#loader');
     const loadJson = $('#load-json');
     const errorContainer = $('#error');
+    const viewerContainer = $('#viewer-page');
+    const mainContainer = $('#main-page');
 
     init();
 
@@ -27,7 +29,14 @@ const $ = (s, c = document) => c.querySelector(s);
             const file = ev.target.files[0];
 
             setLoading(true);
-            await runParserWorker(file);
+            const [message, data] = await runParserWorker(file);
+
+            if ('error' === message) {
+                showError(data);
+            } else if ('success' === message) {
+                showSuccess(data);
+            }
+
             setLoading(false);
         }, false);
 
@@ -44,17 +53,39 @@ const $ = (s, c = document) => c.querySelector(s);
         loadingPanel.classList[(v ? 'add' : 'remove')]('hidden');
     }
 
+    /**
+     * Shows the element
+     * @param {HTMLElement} el 
+     */
+    function show(el) {
+        el.classList.remove('hidden');
+    }
+
+     /**
+     * Hides the element
+     * @param {HTMLElement} el 
+     */
+    function hide(el) {
+        el.classList.add('hidden');
+    }
+
     function showError(error) {
         errorContainer.textContent = error;
-        errorContainer.classList.remove('hidden');
+        show(errorContainer)
     }
 
     function resetError() {
         errorContainer.textContent = '';
-        errorContainer.classList.add('hidden');
+        hide(errorContainer);
     }
 
-    async function runParserWorker(file) {
+    function showSuccess(domTree) {
+        $('#viewer', mainContainer).appendChild(domTree);
+        hide(mainContainer);
+        show(viewerContainer);
+    }
+
+    function runParserWorker(file) {
         const worker = new Worker('/assets/parser-worker.js');
         const fileReader = new FileReader();
 
@@ -62,12 +93,25 @@ const $ = (s, c = document) => c.querySelector(s);
             fileReader.addEventListener("load", ev => {
                 worker.postMessage(ev.target.result);
             });
+
+            fileReader.addEventListener('error', err => {
+                clean();
+                rej();
+            });
     
             worker.addEventListener("message", (ev) => {
-                res()
+                clean();
+                res(ev.data);
             });
     
             fileReader.readAsText(file);
+
+            function clean() {
+                fileReader.removeEventListener('load');
+                fileReader.removeEventListener('error');
+                worker.removeEventListener('message');
+                worker.terminate();
+            }
         });
     }
 })();

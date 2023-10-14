@@ -89,7 +89,7 @@
     </style>
 </head>
 <body>
-    <section id="main" class="page">
+    <section id="main-page" class="page">
         <h1>JSON Tree Viewer</h1>
         <p>Simple JSON Viewer that runs completly on-client. No data exchange.</p>
         <div>
@@ -98,8 +98,9 @@
             <small id="error" class="error hidden"></small>
         </div>
     </section>
-    <section id="viewer" class="page hidden">
-
+    <section id="viewer-page" class="page hidden">
+        <h1 id="filename"></h1>
+        <div id="viewer" class="viewer"></div>
     </section>
 
     <div id="loading" class="loading hidden">
