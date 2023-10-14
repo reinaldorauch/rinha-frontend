@@ -135,7 +135,7 @@ const $ = (s, c = document) => c.querySelector(s);
     function buildDomTree(member, obj) {
         const root = document.createElement('pre');
 
-        if (!obj) {
+        if (obj === null || obj === undefined) {
             root.textContent = 'null';
             return root;
         }
