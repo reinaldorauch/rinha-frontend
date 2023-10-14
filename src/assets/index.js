@@ -122,7 +122,7 @@ const $ = (s, c = document) => c.querySelector(s);
                         return rej(err);
                     }
 
-                    const domTree = buildDomTree(data);
+                    const domTree = buildDomTree(undefined, data);
                     res([null, domTree]);
                 } catch (err) {
                     rej([err.message]);
