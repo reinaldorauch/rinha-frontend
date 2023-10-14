@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Viewer - Rinha de Frontend - Reinaldo A. C. Rauch</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter">
+    <style>
+        * {
+            font-family: Inter, sans-serif;
+        }
+
+        body {
+            display: flex;
+        }
+
+        .page {
+            flex: 1 0;
+        }
+
+        .page.hidden {
+            display: none;
+        }
+
+        #loading {
+            display: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <section id="main" class="page">
+        <h1>JSON Tree Viewer</h1>
+        <p>Simple JSON Viewer that runs completly on-client. No data exchange.</p>
+        <p>
+            <input type="file" id="loader">
+            <p id="error"></p>
+        </p>
+    </section>
+    <section id="viewer" class="page hidden">
+
+    </section>
+
+    <div id="loading"></div>
+
+    <script type="text/javascript" src="/assets/index.js"></script>
+</body>
+</html>

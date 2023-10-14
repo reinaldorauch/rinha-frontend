@@ -1,0 +1,9 @@
+{
+    "name": "rinha-frontend",
+    "author": {
+        "name": "Reinaldo A. C. Rauch",
+        "email": "reinaldorauch@gmail.com"
+    },
+    "main": "index.html",
+    "dependencies": {}
+}
