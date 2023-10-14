@@ -10,11 +10,13 @@ const $ = (s, c = document) => c.querySelector(s);
     "use strict";
 
     const loadingPanel = $('#loading');
+    const loader = $('#loader');
+    const loadJson = $('#load-json');
 
     init();
 
     function init() {
-        $('#loader').addEventListener('change', async ev => {
+        loader.addEventListener('change', async ev => {
             /**
              * @var File
              */
@@ -24,6 +26,10 @@ const $ = (s, c = document) => c.querySelector(s);
             await runParserWorker(file);
             setLoading(false);
         }, false);
+
+        loadJson.addEventListener('click', ev => {
+            loader.click(); 
+        });
     }
 
     function setLoading(v) {

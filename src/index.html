@@ -17,8 +17,12 @@
             display: flex;
         }
 
-        h2 {
+        h1 {
             font-size: 48px;
+        }
+
+        p {
+            font-size: 24px;
         }
 
         .page {
@@ -49,7 +53,8 @@
         <h1>JSON Tree Viewer</h1>
         <p>Simple JSON Viewer that runs completly on-client. No data exchange.</p>
         <p>
-            <input type="file" id="loader">
+            <input type="file" id="loader" style="display: none;">
+            <button id="load-json">Load JSON</button>
             <p id="error"></p>
         </p>
     </section>
